@@ -5,6 +5,13 @@
 </head>
 <body>
 <h2>Register Page</h2>
+<c:if test="${not empty errorMessage}">
+    <div style="color: red;">${errorMessage}</div>
+</c:if>
+<c:if test="${not empty successMessage}">
+    <div style="color: green;">${successMessage}</div>
+</c:if>
+
 <form action="${pageContext.request.contextPath}/register-servlet" method="post">
     <div>
         <label for="username">Username:</label>
@@ -14,8 +21,8 @@
         <label for="password">Password:</label>
         <input type="password" id="password" name="password" required pattern=".{8,}" title="Password must be at least 8 characters long.">
     </div>
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required>
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required>
     <div>
         <input type="submit" value="submit">
     </div>

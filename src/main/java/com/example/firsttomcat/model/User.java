@@ -1,4 +1,4 @@
-package com.example.firsttomcat.servlets.model;
+package com.example.firsttomcat.model;
 
 import org.bson.Document;
 

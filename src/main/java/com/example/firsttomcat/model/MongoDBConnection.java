@@ -1,4 +1,4 @@
-package com.example.firsttomcat.servlets;
+package com.example.firsttomcat.model;
 
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
