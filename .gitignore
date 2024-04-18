@@ -11,6 +11,7 @@ target/
 *.iws
 *.iml
 *.ipr
+*.log
 
 ### Eclipse ###
 .apt_generated
@@ -36,3 +37,6 @@ build/
 
 ### Mac OS ###
 .DS_Store
+
+###Protected folder
+/src/main/java/com/example/firsttomcat/service/EmailConfigConstants.java

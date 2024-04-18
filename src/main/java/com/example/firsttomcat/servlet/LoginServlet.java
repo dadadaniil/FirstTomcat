@@ -1,8 +1,8 @@
-package com.example.firsttomcat.servlets.servlets;
+package com.example.firsttomcat.servlet;
 
-import com.example.firsttomcat.servlets.model.User;
-import com.example.firsttomcat.servlets.service.SessionService;
-import com.example.firsttomcat.servlets.service.UserService;
+import com.example.firsttomcat.model.User;
+import com.example.firsttomcat.service.impl.SessionServiceImpl;
+import com.example.firsttomcat.service.impl.UserServiceImpl;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -15,9 +15,9 @@ import java.io.IOException;
 
 @WebServlet(name = "loginServlet", value = "/login-servlet")
 public class LoginServlet extends HttpServlet {
-    private static final Logger logger = LogManager.getLogger(MultiplyServlet.class);
-    private UserService userService = new UserService();
-    private SessionService sessionService = new SessionService();
+    private static final Logger logger = LogManager.getLogger(LoginServlet.class);
+    private final UserServiceImpl userServiceImpl = new UserServiceImpl();
+    private final SessionServiceImpl sessionServiceImpl = new SessionServiceImpl();
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         logger.info("LoginServlet doPost");
@@ -27,16 +27,17 @@ public class LoginServlet extends HttpServlet {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
 
-        User user = userService.authenticate(email, password);
+        User user = userServiceImpl.authenticate(email, password);
 
         if (user != null) {
             logger.info("User with email " + email + " logged in");
-            request.setAttribute("successMessage", "Now you are logged in");
-            request.getRequestDispatcher("pages/success.jsp").forward(request, response);
+            request.getSession().setAttribute("successMessage", "Now you are logged in and can manage your account.");
+            response.sendRedirect(request.getContextPath() + "/account-servlet");
+            sessionServiceImpl.createSession(request, email);
         } else {
             logger.info("Invalid credentials for email " + email);
             request.setAttribute("errorMessage", "Invalid credentials for email " + email);
-            request.getRequestDispatcher("pages/error.jsp").forward(request, response);
+            request.getRequestDispatcher("/pages/login.jsp").forward(request, response);
         }
     }
 }
